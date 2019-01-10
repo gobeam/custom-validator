@@ -60,7 +60,7 @@ func TestValidationErrorToText(t *testing.T) {
 	validate := []ExtraValidation{
 		{Tag: "test", Message:"%s is passed!"},
 	}
-	makeExtraValidation(validate)
+	MakeExtraValidation(validate)
 
 	error1 := validator.FieldError{}
 	error1.Tag = "required"
