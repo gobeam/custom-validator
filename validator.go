@@ -103,7 +103,7 @@ var ValidationObject = []ExtraValidation{
 }
 
 // This method is for registering new validator
-func makeExtraValidation(v []ExtraValidation) {
+func MakeExtraValidation(v []ExtraValidation) {
 	for _, vObj := range v {
 		ValidationObject = append(ValidationObject, vObj)
 	}
