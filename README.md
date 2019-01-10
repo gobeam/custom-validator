@@ -55,7 +55,7 @@ router.Run()
 ```
 
 
-Here %s in field name which is automatically replaced later and it doesnot matter if the field name is camel case because it will be splitted automatically: for example: "firstName" will be outputted as "First name". You should name your field name with camelcase only and avoiding _ or underscore. If you have additional param like while specifying length we do len=10 and in message to get that param value just add another "%s" in message like "%s must be of length %s!"
+Here %s in field name which is automatically replaced later and it doesnot matter if the field name is camel case because it will be splitted automatically: for example: "firstName" will be outputted as "First name". You should name your field name with camelcase only and avoiding _ or underscore. If you have additional param like while specifying length we do len=10 and in message to get that param value just add another "%s" in message like "%s must be of length %s!" and it will be outputted like "Field name must be of length 10!"
 
 
 ## Test
