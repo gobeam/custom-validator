@@ -7,6 +7,7 @@ import (
 	"github.com/stvp/rollbar"
 	"gopkg.in/go-playground/validator.v8"
 	"net/http"
+	"reflect"
 	"regexp"
 	"strings"
 	"unicode"
@@ -141,6 +142,10 @@ func ValidationErrorToText(e *validator.FieldError) string {
 
 }
 
+const (
+	ErrorTypeErrorValidation string = "validator.ValidationErrors"
+)
+
 // This method collects all errors and submits them to Rollbar
 func Errors() gin.HandlerFunc {
 
@@ -156,16 +161,25 @@ func Errors() gin.HandlerFunc {
 						c.JSON(c.Writer.Status(), gin.H{"Error": e.Error()})
 					}
 				case gin.ErrorTypeBind:
-					errs := e.Err.(validator.ValidationErrors)
-					list := make(map[string]string)
+					errorType := reflect.TypeOf(e.Err).String()
+					switch errorType {
+					case ErrorTypeErrorValidation:
+						errs := e.Err.(validator.ValidationErrors)
+						list := make(map[string]string)
 
-					for _, err := range errs {
-						list[strings.ToLower(err.Field)] = ValidationErrorToText(err)
+						for _, err := range errs {
+							list[strings.ToLower(err.Field)] = ValidationErrorToText(err)
+						}
+						status := http.StatusUnprocessableEntity
+						c.JSON(status, gin.H{"error": list})
+						c.Abort()
+						return
+					default:
+						status := http.StatusUnprocessableEntity
+						c.JSON(status, gin.H{"error": e.Err.Error()})
+						c.Abort()
 					}
-					status := http.StatusUnprocessableEntity
-					c.JSON(status, gin.H{"error": list})
-					c.Abort()
-					return
+
 				default:
 					// Log all other errors
 					rollbar.RequestError(rollbar.ERR, c.Request, e.Err)
