@@ -97,8 +97,8 @@ type ExtraValidation struct{
 // Initializing default Validation object
 var ValidationObject = []ExtraValidation{
 {Tag: "required", Message:"%s is required!"},
-{Tag: "max", Message:"%s cannot be longer than %s!"},
-{Tag: "min", Message:"%s must be minimum %s characters!"},
+{Tag: "max", Message:"%s cannot be more than %s!"},
+{Tag: "min", Message:"%s must be minimum %s!"},
 {Tag: "email", Message:"Invalid email format!"},
 {Tag: "len", Message:"%s must be %s characters long!"},
 }
