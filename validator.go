@@ -178,6 +178,7 @@ func Errors() gin.HandlerFunc {
 						status := http.StatusUnprocessableEntity
 						c.JSON(status, gin.H{"error": e.Err.Error()})
 						c.Abort()
+						return
 					}
 
 				default:
