@@ -52,6 +52,18 @@ router.Use( validator.Errors())
 
 router.Run()
 }
+
+type TestModel struct {
+    Name `json:"name" binding:required,unique`
+}
+
+func SomeFunction (c *gin.Context) {
+    var model TestModel
+	if err := c.ShouldBindBodyWith(&model, binding.JSON); err != nil {
+		_ = c.AbortWithError(422, err).SetType(gin.ErrorTypeBind)
+		return
+	}
+}
 ```
 
 
