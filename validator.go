@@ -87,7 +87,7 @@ func Split(src string) string {
 }
 
 
-// Extra validation struct
+// ExtraValidation model
 type ExtraValidation struct{
 	Tag string
 	Message string
