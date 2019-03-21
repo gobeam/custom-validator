@@ -1,5 +1,5 @@
 # Gin Gonic Custom Validator
-[![Build][Build-Status-Image]][Build-Status-Url] [![Go Report Card](https://goreportcard.com/badge/github.com/roshanr83/validator)](https://goreportcard.com/report/github.com/roshanr83/validator) [![GoDoc][godoc-image]][godoc-url]
+[![Build][Build-Status-Image]][Build-Status-Url] [![Go Report Card](https://goreportcard.com/badge/github.com/roshanr83/validator?branch=master)](https://goreportcard.com/report/github.com/roshanr83/validator) [![GoDoc][godoc-image]][godoc-url]
 
 This package was build to beautify Gin Gonic Binding validation error message for api. You can register your own custom validation and easily add customize its message as you like.
 
