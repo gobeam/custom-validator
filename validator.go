@@ -14,11 +14,25 @@ import (
 	"unicode/utf8"
 )
 
-var (
-	ErrorInternalError = errors.New("whoops something went wrong")
+const (
+	ErrorTypeErrorValidation string = "validator.ValidationErrors"
 )
 
-// This method is for uppercase first letter of word
+var (
+	ErrorInternalError = errors.New("whoops something went wrong")
+	matchFirstCap = regexp.MustCompile("(.)([A-Z][a-z]+)")
+	matchAllCap   = regexp.MustCompile("([a-z0-9])([A-Z])")
+
+)
+
+// ToSnakeCase method change string to snakecase
+func toSnakeCase(str string) string {
+	snake := matchFirstCap.ReplaceAllString(str, "${1}_${2}")
+	snake  = matchAllCap.ReplaceAllString(snake, "${1}_${2}")
+	return strings.ToLower(snake)
+}
+
+// UcFirst method is for uppercase first letter of word
 func UcFirst(str string) string {
 	for i, v := range str {
 		return string(unicode.ToUpper(v)) + str[i+1:]
@@ -26,13 +40,13 @@ func UcFirst(str string) string {
 	return ""
 }
 
-//This method is to change lowercase word
+// LcFirst method is to change lowercase word
 func LcFirst(str string) string {
 	return strings.ToLower(str)
 }
 
 
-// This method is to split camelcase letter
+// Split method is to split camelcase letter
 func Split(src string) string {
 	// don't split invalid utf8
 	if !utf8.ValidString(src) {
@@ -94,7 +108,7 @@ type ExtraValidation struct{
 
 }
 
-// Initializing default Validation object
+// ValidationObject initialize default Validation object
 var ValidationObject = []ExtraValidation{
 {Tag: "required", Message:"%s is required!"},
 {Tag: "max", Message:"%s cannot be more than %s!"},
@@ -103,7 +117,7 @@ var ValidationObject = []ExtraValidation{
 {Tag: "len", Message:"%s must be %s characters long!"},
 }
 
-// This method is for registering new validator
+// MakeExtraValidation method is for registering new validator
 func MakeExtraValidation(v []ExtraValidation) {
 	for _, vObj := range v {
 		ValidationObject = append(ValidationObject, vObj)
@@ -111,7 +125,7 @@ func MakeExtraValidation(v []ExtraValidation) {
 
 }
 
-// Check if param is involved in valdation message
+// checkOccurance checks if param is involved in valdation message
 func checkOccurance(msg string, word string, param string)(ans string) {
 	reg := regexp.MustCompile("%s")
 
@@ -125,7 +139,7 @@ func checkOccurance(msg string, word string, param string)(ans string) {
 }
 
 
-// This method changes FieldError to string
+// ValidationErrorToText method changes FieldError to string
 func ValidationErrorToText(e *validator.FieldError) string {
 	word := Split(e.Field)
 	var result string
@@ -142,11 +156,7 @@ func ValidationErrorToText(e *validator.FieldError) string {
 
 }
 
-const (
-	ErrorTypeErrorValidation string = "validator.ValidationErrors"
-)
-
-// This method collects all errors and submits them to Rollbar
+// Errors method collects all errors and submits them to Rollbar
 func Errors() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
@@ -168,7 +178,7 @@ func Errors() gin.HandlerFunc {
 						list := make(map[string]string)
 
 						for _, err := range errs {
-							list[strings.ToLower(err.Field)] = ValidationErrorToText(err)
+							list[strings.ToLower(toSnakeCase(err.Field))] = ValidationErrorToText(err)
 						}
 						status := http.StatusUnprocessableEntity
 						c.JSON(status, gin.H{"error": list})

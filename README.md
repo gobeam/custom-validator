@@ -1,3 +1,6 @@
+# Gin Gonic Custom Validator
+[![Build][Build-Status-Image]][Build-Status-Url] [![Go Report Card](https://goreportcard.com/badge/github.com/roshanr83/validator)](https://goreportcard.com/report/github.com/roshanr83/validator) [![GoDoc][godoc-image]][godoc-url]
+
 This package was build to beautify Gin Gonic Binding validation error message for api. You can register your own custom validation and easily add customize its message as you like.
 
 ## Available Scripts
@@ -66,6 +69,12 @@ func SomeFunction (c *gin.Context) {
 }
 ```
 
+## MIT License
+
+```
+Copyright (c) 2019
+```
+
 
 Here %s in field name which is automatically replaced later and it doesnot matter if the field name is camel case because it will be splitted automatically: for example: "firstName" will be outputted as "First name". You should name your field name with camelcase only and avoiding _ or underscore. If you have additional param like while specifying length we do len=10 and in message to get that param value just add another "%s" in message like "%s must be of length %s!" and it will be outputted like "Field name must be of length 10!"
 
@@ -76,3 +85,8 @@ Here %s in field name which is automatically replaced later and it doesnot matte
  ```bash
  go test
  ```
+
+ [Build-Status-Url]: https://travis-ci.org/roshanr83/validator
+ [Build-Status-Image]: https://travis-ci.org/roshanr83/validator.svg?branch=master
+ [godoc-url]: https://godoc.org/github.com/roshanr83/validator
+ [godoc-image]: https://godoc.org/github.com/roshanr83/validator?status.svg
