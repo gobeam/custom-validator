@@ -14,21 +14,22 @@ import (
 	"unicode/utf8"
 )
 
+// const list
 const (
 	ErrorTypeErrorValidation string = "validator.ValidationErrors"
 )
 
+// var list
 var (
 	ErrorInternalError = errors.New("whoops something went wrong")
-	matchFirstCap = regexp.MustCompile("(.)([A-Z][a-z]+)")
-	matchAllCap   = regexp.MustCompile("([a-z0-9])([A-Z])")
-
+	matchFirstCap      = regexp.MustCompile("(.)([A-Z][a-z]+)")
+	matchAllCap        = regexp.MustCompile("([a-z0-9])([A-Z])")
 )
 
 // ToSnakeCase method change string to snakecase
 func toSnakeCase(str string) string {
 	snake := matchFirstCap.ReplaceAllString(str, "${1}_${2}")
-	snake  = matchAllCap.ReplaceAllString(snake, "${1}_${2}")
+	snake = matchAllCap.ReplaceAllString(snake, "${1}_${2}")
 	return strings.ToLower(snake)
 }
 
@@ -44,7 +45,6 @@ func UcFirst(str string) string {
 func LcFirst(str string) string {
 	return strings.ToLower(str)
 }
-
 
 // Split method is to split camelcase letter
 func Split(src string) string {
@@ -100,21 +100,19 @@ func Split(src string) string {
 	return justString
 }
 
-
 // ExtraValidation model
-type ExtraValidation struct{
-	Tag string
+type ExtraValidation struct {
+	Tag     string
 	Message string
-
 }
 
 // ValidationObject initialize default Validation object
 var ValidationObject = []ExtraValidation{
-{Tag: "required", Message:"%s is required!"},
-{Tag: "max", Message:"%s cannot be more than %s!"},
-{Tag: "min", Message:"%s must be minimum %s!"},
-{Tag: "email", Message:"Invalid email format!"},
-{Tag: "len", Message:"%s must be %s characters long!"},
+	{Tag: "required", Message: "%s is required!"},
+	{Tag: "max", Message: "%s cannot be more than %s!"},
+	{Tag: "min", Message: "%s must be minimum %s!"},
+	{Tag: "email", Message: "Invalid email format!"},
+	{Tag: "len", Message: "%s must be %s characters long!"},
 }
 
 // MakeExtraValidation method is for registering new validator
@@ -126,7 +124,7 @@ func MakeExtraValidation(v []ExtraValidation) {
 }
 
 // checkOccurance checks if param is involved in valdation message
-func checkOccurance(msg string, word string, param string)(ans string) {
+func checkOccurance(msg string, word string, param string) (ans string) {
 	reg := regexp.MustCompile("%s")
 
 	matches := reg.FindAllStringIndex(msg, -1)
@@ -138,18 +136,17 @@ func checkOccurance(msg string, word string, param string)(ans string) {
 	return
 }
 
-
 // ValidationErrorToText method changes FieldError to string
 func ValidationErrorToText(e *validator.FieldError) string {
 	word := Split(e.Field)
 	var result string
 	for _, validate := range ValidationObject {
 		if e.Tag == validate.Tag {
-				result =  checkOccurance(validate.Message, word, e.Param)
+			result = checkOccurance(validate.Message, word, e.Param)
 		}
 	}
 	if result == "" {
-		result =  fmt.Sprintf("%s is not valid", word)
+		result = fmt.Sprintf("%s is not valid", word)
 	}
 
 	return result
