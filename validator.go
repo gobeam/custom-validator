@@ -1,11 +1,11 @@
-package validator
+package middleware
 
 import (
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/stvp/rollbar"
-	"gopkg.in/go-playground/validator.v8"
+	"gopkg.in/go-playground/validator.v9"
 	"net/http"
 	"reflect"
 	"regexp"
@@ -137,12 +137,12 @@ func checkOccurance(msg string, word string, param string) (ans string) {
 }
 
 // ValidationErrorToText method changes FieldError to string
-func ValidationErrorToText(e *validator.FieldError) string {
-	word := Split(e.Field)
+func ValidationErrorToText(e validator.FieldError) string {
+	word := Split(e.Field())
 	var result string
 	for _, validate := range ValidationObject {
-		if e.Tag == validate.Tag {
-			result = checkOccurance(validate.Message, word, e.Param)
+		if e.Tag() == validate.Tag {
+			result = checkOccurance(validate.Message, word, e.Param())
 		}
 	}
 	if result == "" {
@@ -171,11 +171,14 @@ func Errors() gin.HandlerFunc {
 					errorType := reflect.TypeOf(e.Err).String()
 					switch errorType {
 					case ErrorTypeErrorValidation:
+						fmt.Println("|||||||||||||||||||||||||||")
+						fmt.Println(e.Err)
+						fmt.Println("|||||||||||||||||||||||||||")
 						errs := e.Err.(validator.ValidationErrors)
 						list := make(map[string]string)
 
 						for _, err := range errs {
-							list[strings.ToLower(toSnakeCase(err.Field))] = ValidationErrorToText(err)
+							list[strings.ToLower(toSnakeCase(err.Field()))] = ValidationErrorToText(err)
 						}
 						status := http.StatusUnprocessableEntity
 						c.JSON(status, gin.H{"error": list})
