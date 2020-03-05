@@ -171,9 +171,6 @@ func Errors() gin.HandlerFunc {
 					errorType := reflect.TypeOf(e.Err).String()
 					switch errorType {
 					case ErrorTypeErrorValidation:
-						fmt.Println("|||||||||||||||||||||||||||")
-						fmt.Println(e.Err)
-						fmt.Println("|||||||||||||||||||||||||||")
 						errs := e.Err.(validator.ValidationErrors)
 						list := make(map[string]string)
 
