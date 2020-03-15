@@ -1,14 +1,17 @@
 language: go
+sudo: false
+go_import_path: github.com/gobeam/custom-validator
 go:
-  - "1.10.x"
-  - "1.11.x"
+- 1.9
 
 env:
   - GO111MODULE=on
 
-install: true
+before_install:
+- go mod download
 
-script: go test -v -mod=vendor ./...
+script:
+- go test
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
