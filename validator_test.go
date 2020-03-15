@@ -1,7 +1,7 @@
 package validator
 
 import (
-	"gopkg.in/go-playground/validator.v8"
+	"gopkg.in/go-playground/validator.v9"
 	"testing"
 )
 
@@ -53,30 +53,37 @@ func TestSplit(t *testing.T) {
 	}
 }
 
+type FirstNameValidationTestStruct struct {
+	FirstName string `validate:"required" json:"firstName"`
+}
+
+type ThisTestVlaidationStruct struct {
+	ThisTest string `validate:"required" json:"thisTest"`
+}
+
 func TestValidationErrorToText(t *testing.T) {
-	validate := []ExtraValidation{
-		{Tag: "test", Message: "%s is passed!"},
+	extraValidator := []ExtraValidation{
+		{Tag: "required", Message: "%s is passed!"},
 	}
-	MakeExtraValidation(validate)
+	MakeExtraValidation(extraValidator)
 
-	error1 := validator.FieldError{}
-	error1.Tag = "required"
-	error1.Field = "firstName"
+	validates := validator.New()
+	err := validates.Struct(FirstNameValidationTestStruct{})
+	error1 := err.(validator.ValidationErrors)
 
-	error2 := validator.FieldError{}
-	error2.Tag = "test"
-	error2.Field = "thisTest"
+	err2 := validates.Struct(ThisTestVlaidationStruct{})
+	error2 := err2.(validator.ValidationErrors)
 
 	var tests = []struct {
-		input    *validator.FieldError
+		input    validator.ValidationErrors
 		expected string
 	}{
-		{&error1, "First name is required!"},
-		{&error2, "This test is passed!"},
+		{error1, "First name is passed!"},
+		{error2, "This test is passed!"},
 	}
 
 	for _, test := range tests {
-		if output := ValidationErrorToText(test.input); output != test.expected {
+		if output := ValidationErrorToText(test.input[0]); output != test.expected {
 			t.Error("Test Failed: {} inputted, {} expected, received: {}", test.input, test.expected, output)
 		}
 
