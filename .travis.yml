@@ -1,17 +1,11 @@
-language: go
+language: c
+os:
+  - linux
+  - osx
+dist: trusty
 sudo: false
-go_import_path: github.com/gobeam/custom-validator
-go:
-- 1.9
-
-env:
-  - GO111MODULE=on
-
-before_install:
-- go mod download
-
+install:
+  - eval "$(curl -sL https://raw.githubusercontent.com/travis-ci/gimme/master/gimme | GIMME_GO_VERSION=master bash)"
 script:
-- go test
-
-after_success:
-- bash <(curl -s https://codecov.io/bash)
+  - go build
+  - go test
