@@ -4,7 +4,7 @@ go_import_path: github.com/gobeam/custom-validator
 go:
 - 1.9
 before_install:
-- go get ./...
+- go mod download
 
 script:
 - go test
