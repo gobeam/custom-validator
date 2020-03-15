@@ -1,5 +1,5 @@
 # Gin Gonic Custom Validator
-[![Build][Build-Status-Image]][Build-Status-Url] [![Go Report Card](https://goreportcard.com/badge/github.com/gobeam/validator?branch=master)](https://goreportcard.com/report/github.com/gobeam/validator) [![GoDoc][godoc-image]][godoc-url]
+[![Build][Build-Status-Image]][Build-Status-Url] [![Go Report Card](https://goreportcard.com/badge/github.com/gobeam/custom-validator?branch=master)](https://goreportcard.com/report/github.com/gobeam/custom-validator) [![GoDoc][godoc-image]][godoc-url]
 
 This package was build to beautify Gin Gonic Binding validation error message for api. You can register your own custom validation and easily add customize its message as you like.
 
@@ -8,12 +8,12 @@ This package was build to beautify Gin Gonic Binding validation error message fo
 ## Install
 
 ```bash
-go get github.com/gobeam/validator
+go get github.com/gobeam/custom-validator
 ```
 
 ## Import in your code
 ```
-import "github.com/gobeam/validator"
+import "github.com/gobeam/custom-validator"
 ```
 
 ## Simple Examples
@@ -80,10 +80,10 @@ Here %s in field name which is automatically replaced later and it doesnot matte
  go test
  ```
 
- [Build-Status-Url]: https://travis-ci.org/gobeam/validator
- [Build-Status-Image]: https://travis-ci.org/gobeam/validator.svg?branch=master
- [godoc-url]: https://godoc.org/github.com/gobeam/validator
- [godoc-image]: https://godoc.org/github.com/gobeam/validator?status.svg
+ [Build-Status-Url]: https://travis-ci.org/gobeam/custom-validator
+ [Build-Status-Image]: https://travis-ci.org/gobeam/custom-validator.svg?branch=master
+ [godoc-url]: https://godoc.org/github.com/gobeam/custom-validator
+ [godoc-image]: https://godoc.org/github.com/gobeam/custom-validator?status.svg
  
  ## MIT License
 
