@@ -1,7 +1,7 @@
 package validator
 
 import (
-	"gopkg.in/go-playground/validator.v8"
+	"gopkg.in/go-playground/validator.v9"
 	"testing"
 )
 
