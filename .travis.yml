@@ -1,6 +1,6 @@
 language: go
 sudo: false
-go_import_path: github.com/roshanr83/validator
+go_import_path: github.com/gobeam/custom-validator
 go:
 - 1.9
 before_install:
