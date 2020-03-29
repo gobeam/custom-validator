@@ -2,6 +2,7 @@
 [![Build][Build-Status-Image]][Build-Status-Url] [![Go Report Card](https://goreportcard.com/badge/github.com/gobeam/custom-validator?branch=master)](https://goreportcard.com/report/github.com/gobeam/custom-validator) [![GoDoc][godoc-image]][godoc-url]
 
 This package was build to beautify Gin Gonic Binding validation error message for api. You can register your own custom validation and easily add customize its message as you like.
+Currently this package supports gopkg.in/go-playground/validator.v9
 
 ## Available Scripts
 
