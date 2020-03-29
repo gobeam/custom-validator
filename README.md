@@ -83,7 +83,7 @@ Here %s in field name which is automatically replaced later and it doesnot matte
 
  [Build-Status-Url]: https://travis-ci.org/gobeam/custom-validator
  [Build-Status-Image]: https://travis-ci.org/gobeam/custom-validator.svg?branch=master
- [godoc-url]: https://godoc.org/github.com/gobeam/custom-validator
+ [godoc-url]: https://pkg.go.dev/github.com/gobeam/custom-validator?tab=doc
  [godoc-image]: https://godoc.org/github.com/gobeam/custom-validator?status.svg
  
  ## MIT License
